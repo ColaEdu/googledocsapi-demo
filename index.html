@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      async function callAppScript() {
+        const response = await fetch("http://localhost:3000/demo");
+        const result = await response.text();
+        document.getElementById("output").innerText = result;
+      }
+      async function allDocsId() {
+        const response = await fetch("http://localhost:3000/allDocsId");
+        const result = await response.text();
+        document.getElementById("output").innerText = result;
+      }
+      async function listAllDocs() {
+        const response = await fetch("http://localhost:3000/query");
+        const result = await response.text();
+        document.getElementById("output").innerText = result;
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="callAppScript()">获取指定id的文档对象</button>
+    <button onclick="allDocsId()">获取全部文档id</button>
+    <button onclick="listAllDocs()">获取全部文档对象</button>
+    <div id="output"></div>
+  </body>
+</html>

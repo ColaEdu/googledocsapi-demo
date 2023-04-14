@@ -6,7 +6,7 @@ const HttpsProxyAgent = require("https-proxy-agent");
 const app = express();
 app.use(cors());
 
-const appScriptUrl = "https://script.google.com/macros/s/AKfycbzAtwAGH_gPeZwve0La1Mi25LFfMkcInJKrstFmbTS-UN_5i1F_LGp4NJV-eBeFaaNn4g/exec";
+const appScriptUrl = "https://script.google.com/macros/s/AKfycbxUQIWOfufQ3Kkya7lFW_SjbxERPXE2sXCbJ2HaqZLFaLwd5RWabJHON3SMv-DlLM1oqw/exec";
 
 const proxyUrl = "http://127.0.0.1:7890"; // 替换为本地代理地址
 const agent = new HttpsProxyAgent(proxyUrl);
@@ -20,10 +20,33 @@ function fetchWithTimeout(url, options, timeout = 10000) {
   ]);
 }
 
-app.get("/app-script", async (req, res) => {
+app.get("/demo", async (req, res) => {
   try {
-    const response = await fetchWithTimeout(appScriptUrl, { agent });
-    const data = await response.text();
+    const response = await fetchWithTimeout(`${appScriptUrl}?path=demo`, { agent });
+    const data = await response.json();
+    res.send(data);
+  } catch (error) {
+    console.error("Error fetching App Script:", error);
+    res.status(500).send("Error fetching App Script");
+  }
+});
+
+app.get("/allDocsId", async (req, res) => {
+  try {
+    const response = await fetchWithTimeout(`${appScriptUrl}?path=allDocsId`, { agent });
+    const data = await response.json();
+    res.send(data);
+  } catch (error) {
+    console.error("Error fetching App Script:", error);
+    res.status(500).send("Error fetching App Script");
+  }
+});
+
+
+app.get("/query", async (req, res) => {
+  try {
+    const response = await fetchWithTimeout(`${appScriptUrl}?path=query`, { agent });
+    const data = await response.json();
     res.send(data);
   } catch (error) {
     console.error("Error fetching App Script:", error);
